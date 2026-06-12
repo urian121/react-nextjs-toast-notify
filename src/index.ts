@@ -122,27 +122,39 @@ const createToast = (props: ToastProps, options: ToastOptions = {}): void => {
   const container = getToastContainer(position);
   const toast = document.createElement("div");
   
-  // Determinar la duración efectiva para la barra de progreso
+  // Si duration es null se usa el valor por defecto (8000ms); en ambos casos hay barra y auto-cierre
   const effectiveDuration = duration === null ? 8000 : duration;
   
   toast.className = `toast-nextjs ${type} animate-${transition}`;
+
+  // error/warning interrumpen al lector de pantalla (assertive); success/info esperan un pause (polite)
+  const isUrgent = type === "error" || type === "warning";
+  toast.setAttribute("role", isUrgent ? "alert" : "status");
+  toast.setAttribute("aria-live", isUrgent ? "assertive" : "polite");
+  toast.setAttribute("aria-atomic", "true");
+
   toast.style.setProperty("--progress-duration", `${effectiveDuration}ms`);
 
   const toastIcon = icon || TOAST_ICONS[type];
   const backgroundColor = TOAST_COLORS[type];
 
+  // El icono (builtin o personalizado) se inserta como HTML porque es SVG/markup intencional.
+  // El mensaje se asigna con textContent después para evitar XSS.
   toast.innerHTML = `
     <div class="toast-content">
       <i class="check" style="background-color: ${backgroundColor};">
         ${toastIcon}
       </i>
       <div class="message">
-        <span class="text text-2">${message}</span>
+        <span class="text text-2"></span>
       </div>
     </div>
     <i class="close-toast"></i>
     ${progress ? '<div class="progress"></div>' : ""}
   `;
+
+  // Asignación segura del mensaje: textContent escapa cualquier HTML/script del input
+  (toast.querySelector(".text.text-2") as HTMLElement).textContent = message;
 
   container.appendChild(toast);
 
@@ -160,7 +172,7 @@ const createToast = (props: ToastProps, options: ToastOptions = {}): void => {
   // Event listeners
   toast.querySelector(".close-toast")?.addEventListener("click", () => closeToast(toast));
   
-  // Solo configurar auto-close si duration no es null
+  // Si duration es null el toast es persistente: solo se cierra manualmente con el botón X
   if (duration !== null) {
     setTimeout(() => closeToast(toast), effectiveDuration);
   }

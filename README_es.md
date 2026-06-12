@@ -193,7 +193,7 @@ La duración por defecto de las notificaciones es de **8 segundos**, pero puedes
     function App() {
       const handleShowToast = () => {
         showToast.success("¡Toast que se cierra en 5 segundos!", {
-          duration: 5000, // Se cierra automáticamente en 5 segundos
+          duration: 5000,
         });
       };
       return <button onClick={handleShowToast}>Toast con auto-cierre</button>;
@@ -210,7 +210,7 @@ La duración por defecto de las notificaciones es de **8 segundos**, pero puedes
     function App() {
       const handleShowPersistentToast = () => {
         showToast.warning("¡Este toast requiere cierre manual!", {
-          duration: null, // NO se cierra automáticamente
+          duration: null,
         });
       };
       return <button onClick={handleShowPersistentToast}>Toast persistente</button>;

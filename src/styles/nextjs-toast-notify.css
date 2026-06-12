@@ -27,8 +27,6 @@
   --toast-progress-height: 4px;
   
   /* Typography */
-  /*--toast-font-size: 17px;
-    --toast-font-weight: 400;*/
   --toast-icon-font-size: 20px;
   
   /* Shadows & Effects */
@@ -464,7 +462,7 @@
   animation: popUpOut var(--toast-animation-normal) forwards;
 }
 
-@keyframes TopBounce {
+@keyframes topBounce {
   from,
   20%,
   53%,
@@ -484,7 +482,7 @@
   }
 }
 
-@keyframes TopBounceOut {
+@keyframes topBounceOut {
   0%,
   20%,
   53%,
@@ -512,13 +510,13 @@
 }
 
 .animate-topBounce {
-  animation: TopBounce var(--toast-animation-bounce) var(--toast-ease-out);
+  animation: topBounce var(--toast-animation-bounce) var(--toast-ease-out);
   opacity: var(--toast-opacity-visible);
   pointer-events: auto;
 }
 
 .animate-topBounceOut {
-  animation: TopBounceOut var(--toast-animation-bounce) forwards;
+  animation: topBounceOut var(--toast-animation-bounce) forwards;
   pointer-events: none;
 }
 

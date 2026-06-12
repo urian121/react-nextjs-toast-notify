@@ -31,9 +31,9 @@ export type ToastType = "success" | "error" | "warning" | "info";
  * Todas las propiedades aparecerán en el autocompletado del IDE.
  */
 export interface ToastOptions {
-  /** 
+  /**
    * Duración en milisegundos que se mostrará la notificación.
-   * Si es null, usa el valor por defecto pero no se cierra automáticamente.
+   * Si es null, usa el valor por defecto (8000ms) para la barra de progreso pero no se cierra automáticamente.
    * @default 8000
    * @example 4000
    */
@@ -51,14 +51,14 @@ export interface ToastOptions {
    * @default "top-right"
    * @example "top-center"
    */
-  position?: "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right";
+  position?: ToastPosition;
 
   /** 
    * Tipo de transición para la entrada de la notificación.
    * @default "fadeIn"
    * @example "slideInUp"
    */
-  transition?: "fadeIn" | "swingInverted" | "bounceIn" | "popUp" | "topBounce" | "bounceInDown" | "slideInUp";
+  transition?: ToastTransition;
 
   /** 
    * Icono personalizado para la notificación (HTML string).
@@ -86,5 +86,5 @@ export interface ToastProps {
    * Tipo de notificación.
    * @default "success"
    */
-  type?: "success" | "error" | "warning" | "info";
+  type?: ToastType;
 }
